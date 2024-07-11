@@ -1,0 +1,17 @@
+# Ativa o mecanismo de reescrita
+RewriteEngine On
+
+# Bloqueia o acesso a diretórios específicos
+RewriteRule ^(routes|config|private) - [F,L]
+
+# Bloqueia o acesso a arquivos específicos
+<FilesMatch "\.(env|htaccess)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+
+# Se o arquivo ou diretório não existir, redireciona para index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
